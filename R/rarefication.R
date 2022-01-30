@@ -44,7 +44,7 @@ sd_sp <- rep(NA,unique(trim_dat$acq_nb_frame)) #sd richness
 for(i in 1:unique(trim_dat$acq_nb_frame)){
   sp_count <- rep(NA,iter)
   for(l in 1:iter){
-    sample_img <- sample(imgs,i) #sample several images
+    sample_img <- sample(imgs,i,replace = T) #sample several images
     taxa <- trim_dat$object_annotation_category[trim_dat$img_id %in% sample_img]
     sp_count[l] <- length(unique(taxa))
     print(paste("Processing ",i,"/",unique(trim_dat$acq_nb_frame),
