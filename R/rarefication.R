@@ -19,7 +19,7 @@ det_names <- c("fiber<detritus","artefact","detritus-green","badfocus<artefact",
                "light<detritus","duplicate",'temp circle',"tail<Crustacea","molt")
 
 #enter specific data
-collection_vol <- gal_L(10) * 1000 #ml
+collection_vol <- gal_L(15) * 1000 #ml
 conc_vol <- 250 #ml
 
 #calc necs columns
@@ -60,7 +60,7 @@ r_curve <- data.frame(mean_sp = mean_sp,
                       vol_sampled = vol_sampled)
 
 #quick plot if you like
-rich_plot(r_curve)
+# rich_plot(r_curve)
 
 #Save data if you like
 BS_B200_richness <- r_curve #rename
