@@ -10,7 +10,8 @@ library(ggplot2)
 cbbp <- c("#E1BE6A","#40B0A6") #cb friendly
 load("../Data/BY_A200_den.rda")
 load("../Data/BY_B200_den.rda")
-
+load("../Data/BS_A200_den.rda")
+load("../Data/BS_B200_den.rda")
 ```
 
 ## Goals of this analysis
@@ -47,11 +48,11 @@ ggplot()+
 ```
 ```{r fig.cap= 'Diatom denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the beaker method',fig.align='center'}
 ggplot()+
-  geom_point(data = BY_A200_den,aes(x = vol_sampled, y= diatom),col = cbbp[1])+
-  geom_errorbar(data = BY_A200_den, aes(x = vol_sampled, ymin = diatom-sd_diatom,
+  geom_point(data = BS_A200_den,aes(x = vol_sampled, y= diatom),col = cbbp[1])+
+  geom_errorbar(data = BS_A200_den, aes(x = vol_sampled, ymin = diatom-sd_diatom,
                     ymax = diatom+sd_diatom),alpha= 0.25,col = cbbp[1])+
-  geom_point(data = BY_B200_den,aes(x = vol_sampled, y= diatom),col = cbbp[2])+
-  geom_errorbar(data = BY_B200_den,aes(x = vol_sampled, ymin = diatom-sd_diatom,
+  geom_point(data = BS_B200_den,aes(x = vol_sampled, y= diatom),col = cbbp[2])+
+  geom_errorbar(data = BS_B200_den,aes(x = vol_sampled, ymin = diatom-sd_diatom,
                     ymax = diatom+sd_diatom),alpha= 0.25,col = cbbp[2])+
   labs(x = "mL Sampled", y= "Indv. L estimate")+
   theme_classic()
@@ -69,6 +70,17 @@ ggplot()+
   labs(x = "mL Sampled", y= "Indv. L estimate")+
   theme_classic()
 ```
+```{r fig.cap= 'Mesozooplankton denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the beaker method',fig.align='center'}
+ggplot()+
+  geom_point(data = BS_A200_den,aes(x = vol_sampled, y= meso),col = cbbp[1])+
+  geom_errorbar(data = BS_A200_den, aes(x = vol_sampled, ymin = meso-sd_meso,
+                    ymax = meso+sd_meso),alpha= 0.25,col = cbbp[1])+
+  geom_point(data = BS_B200_den,aes(x = vol_sampled, y= meso),col = cbbp[2])+
+  geom_errorbar(data = BS_B200_den,aes(x = vol_sampled, ymin = meso-sd_meso,
+                    ymax = meso+sd_meso),alpha= 0.25,col = cbbp[2])+
+  labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
 <br>
 Finally a look at ciliates, heterotophic protists, and dinoflagellates.
 ```{r fig.cap= 'Mixed cateogry denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the syringe method',fig.align='center'}
@@ -78,6 +90,17 @@ ggplot()+
                     ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[1])+
   geom_point(data = BY_B200_den,aes(x = vol_sampled, y= mz_dino),col = cbbp[2])+
   geom_errorbar(data = BY_B200_den,aes(x = vol_sampled, ymin = mz_dino-sd_mzdino,
+                    ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[2])+
+  labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
+```{r fig.cap= 'Mixed cateogry denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the beaker method',fig.align='center'}
+ggplot()+
+  geom_point(data = BS_A200_den,aes(x = vol_sampled, y= mz_dino),col = cbbp[1])+
+  geom_errorbar(data = BS_A200_den, aes(x = vol_sampled, ymin = mz_dino-sd_mzdino,
+                    ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[1])+
+  geom_point(data = BS_B200_den,aes(x = vol_sampled, y= mz_dino),col = cbbp[2])+
+  geom_errorbar(data = BS_B200_den,aes(x = vol_sampled, ymin = mz_dino-sd_mzdino,
                     ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[2])+
   labs(x = "mL Sampled", y= "Indv. L estimate")+
   theme_classic()
