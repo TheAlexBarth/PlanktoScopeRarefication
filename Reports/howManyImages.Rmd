@@ -1,0 +1,84 @@
+---
+title: "How Many Images?"
+author: "Alex Barth"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+cbbp <- c("#E1BE6A","#40B0A6") #cb friendly
+load("../Data/BY_A200_den.rda")
+load("../Data/BY_B200_den.rda")
+
+```
+
+## Goals of this analysis
+Our team is building planktoscope to deploy to existing volunteer plankton monitoring groups.\
+Ideally, we can provide an exact protocol for all volunteers to follow. Volunteers should collect a specified volume and then collect a specified number of images. Clearly, sampling a larger volume will allow for better data. There are two ways to increase volume sampled:
+<br>
+1. Take more images<br>
+2. Concentrate the sample<br>
+However, both these methods have issues. First, volunteers are limited in their time so I want to minimize how much time they have to spend collecting images. Additionally, more images will requir more time for the segmenter, which can be quite slow. Second, there is a practical limitation to how concentrated a sample is. If there are too many objects in the frame, the segmenter won't function well. Additionally fluidic paths can clog. 
+<br>
+To figure out how many samples, I collected samples from Oyster Landing, North Inlet, SC. I also investigated if the fluidic pathway (syringe or beaker) had a large impact. I collected samples of either 10 or 15 gallons concentrated into a 250mL container. I filtered these samples with 200 micron mesh. I then ran them through two planktoscopes. One sampled from a beaker while the other used a syringe (classic set-up). I took 500 images. In thsi analysis, I am subsampling from images to get an idea of variability if I were to have taken less images.
+<br>
+Ideally, this would be ran multiple times. However this will at least provide a guideline idea. This process would also need to be done repeatedly in different systems.
+<br>
+There are two main goals:<br>
+- Get a stable density estimate for key taxa<br>
+- Adequately sample community diversity<br>
+
+
+
+### How stable are density estimates?
+
+First a look at diatoms: These are the most common taxa in this sample. Primarily a mix of several chaetoceros chains.
+```{r fig.cap= 'Diatom denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the syringe method',fig.align='center'}
+ggplot()+
+  geom_point(data = BY_A200_den,aes(x = vol_sampled, y= diatom),col = cbbp[1])+
+  geom_errorbar(data = BY_A200_den, aes(x = vol_sampled, ymin = diatom-sd_diatom,
+                    ymax = diatom+sd_diatom),alpha= 0.25,col = cbbp[1])+
+  geom_point(data = BY_B200_den,aes(x = vol_sampled, y= diatom),col = cbbp[2])+
+  geom_errorbar(data = BY_B200_den,aes(x = vol_sampled, ymin = diatom-sd_diatom,
+                    ymax = diatom+sd_diatom),alpha= 0.25,col = cbbp[2])+
+  labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
+```{r fig.cap= 'Diatom denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the beaker method',fig.align='center'}
+ggplot()+
+  geom_point(data = BY_A200_den,aes(x = vol_sampled, y= diatom),col = cbbp[1])+
+  geom_errorbar(data = BY_A200_den, aes(x = vol_sampled, ymin = diatom-sd_diatom,
+                    ymax = diatom+sd_diatom),alpha= 0.25,col = cbbp[1])+
+  geom_point(data = BY_B200_den,aes(x = vol_sampled, y= diatom),col = cbbp[2])+
+  geom_errorbar(data = BY_B200_den,aes(x = vol_sampled, ymin = diatom-sd_diatom,
+                    ymax = diatom+sd_diatom),alpha= 0.25,col = cbbp[2])+
+  labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
+<br>
+Next a look at the mesozooplankton. These are primarily different copepods and copepidites.
+```{r fig.cap= 'Mesozooplankton denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the syringe method',fig.align='center'}
+ggplot()+
+  geom_point(data = BY_A200_den,aes(x = vol_sampled, y= meso),col = cbbp[1])+
+  geom_errorbar(data = BY_A200_den, aes(x = vol_sampled, ymin = meso-sd_meso,
+                    ymax = meso+sd_meso),alpha= 0.25,col = cbbp[1])+
+  geom_point(data = BY_B200_den,aes(x = vol_sampled, y= meso),col = cbbp[2])+
+  geom_errorbar(data = BY_B200_den,aes(x = vol_sampled, ymin = meso-sd_meso,
+                    ymax = meso+sd_meso),alpha= 0.25,col = cbbp[2])+
+  labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
+<br>
+Finally a look at ciliates, heterotophic protists, and dinoflagellates.
+```{r fig.cap= 'Mixed cateogry denisty estimate. Yellow is the 10gal concentrated and Blue-Green is 15gal concentrated. These data were ran using the syringe method',fig.align='center'}
+ggplot()+
+  geom_point(data = BY_A200_den,aes(x = vol_sampled, y= mz_dino),col = cbbp[1])+
+  geom_errorbar(data = BY_A200_den, aes(x = vol_sampled, ymin = mz_dino-sd_mzdino,
+                    ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[1])+
+  geom_point(data = BY_B200_den,aes(x = vol_sampled, y= mz_dino),col = cbbp[2])+
+  geom_errorbar(data = BY_B200_den,aes(x = vol_sampled, ymin = mz_dino-sd_mzdino,
+                    ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[2])+
+  labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
