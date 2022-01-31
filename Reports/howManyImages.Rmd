@@ -12,6 +12,10 @@ load("../Data/BY_A200_den.rda")
 load("../Data/BY_B200_den.rda")
 load("../Data/BS_A200_den.rda")
 load("../Data/BS_B200_den.rda")
+load("../Data/BY_A200_richness.rda")
+load("../Data/BY_B200_richness.rda")
+load("../Data/BS_A200_richness.rda")
+load("../Data/BS_B200_richness.rda")
 ```
 
 ## Goals of this analysis
@@ -103,5 +107,37 @@ ggplot()+
   geom_errorbar(data = BS_B200_den,aes(x = vol_sampled, ymin = mz_dino-sd_mzdino,
                     ymax = mz_dino+sd_mzdino),alpha= 0.25,col = cbbp[2])+
   labs(x = "mL Sampled", y= "Indv. L estimate")+
+  theme_classic()
+```
+
+
+##
+# Now what does this rarefication curve look like?
+
+```{r fig.cap='Richness curve for the syringe sampling method', fig.align= 'center'}
+ggplot()+
+  geom_point(data = BY_A200_richness, aes(x = vol_sampled, y = mean_sp),col = cbbp[1])+
+  geom_errorbar(data = BY_A200_richness, aes(x = vol_sampled, ymin = mean_sp - sd_sp,
+                                             ymax = mean_sp + sd_sp), 
+                col = cbbp[1],alpha = 0.25)+
+  geom_point(data = BY_B200_richness, aes(x = vol_sampled, y = mean_sp),col = cbbp[2])+
+  geom_errorbar(data = BY_B200_richness, aes(x = vol_sampled, ymin = mean_sp - sd_sp,
+                                             ymax = mean_sp + sd_sp),
+                col = cbbp[2], alpha = 0.25)+
+  labs(x = "mL Sampled", y = "Numb. Taxa")+
+  theme_classic()
+```
+<br>
+```{r fig.cap='Richness curve for the beaker sampling method', fig.align= 'center'}
+ggplot()+
+  geom_point(data = BS_A200_richness, aes(x = vol_sampled, y = mean_sp),col = cbbp[1])+
+  geom_errorbar(data = BS_A200_richness, aes(x = vol_sampled, ymin = mean_sp - sd_sp,
+                                             ymax = mean_sp + sd_sp), 
+                col = cbbp[1],alpha = 0.25)+
+  geom_point(data = BS_B200_richness, aes(x = vol_sampled, y = mean_sp),col = cbbp[2])+
+  geom_errorbar(data = BS_B200_richness, aes(x = vol_sampled, ymin = mean_sp - sd_sp,
+                                             ymax = mean_sp + sd_sp),
+                col = cbbp[2], alpha = 0.25)+
+  labs(x = "mL Sampled", y = "Numb. Taxa")+
   theme_classic()
 ```
